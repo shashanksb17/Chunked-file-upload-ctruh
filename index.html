@@ -10,39 +10,39 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Align content at the top */
+    justify-content: flex-start; 
     height: 100vh;
     margin: 0;
 }
 
 h1 {
-    margin-bottom: 20px; /* Add margin below the heading */
+    margin-bottom: 20px; 
 }
 
 #uploadForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px; /* Add margin at the top of the form */
+    margin-top: 20px; 
 }
 
 #fileInputContainer {
     display: flex;
     align-items: center;
-    margin-bottom: 20px; /* Add margin below the file input */
+    margin-bottom: 20px; 
 }
 
 label {
-    margin-right: 10px; /* Add margin to the right of the label */
+    margin-right: 10px; 
 }
 
 #fileInput {
-    /* If you want to control the width of the file input, you can set it here */
+    width: 300px;
 }
 
 #uploadButton {
-    font-size: 1.2em; /* Increase the font size */
-    padding: 10px; /* Increase the padding */
+    font-size: 1.2em; 
+    padding: 10px; 
     cursor: pointer;
 }
 
@@ -90,30 +90,24 @@ label {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Hide loader on success
                     document.getElementById('loader').style.display = 'none';
-    
-                    // Display success message
+
                     document.getElementById('successMessage').innerHTML = `File uploaded successfully: ${data.filePath}`;
                     document.getElementById('successMessage').style.display = 'block';
-    
-                    // Clear file input
+
                     fileInput.value = '';
-    
-                    // Hide success message after 5 seconds
+
                     setTimeout(() => {
                         document.getElementById('successMessage').style.display = 'none';
                     }, 5000);
                 })
                 .catch(error => {
-                    // Hide loader on error
+
                     document.getElementById('loader').style.display = 'none';
-    
-                    // Display error message
+
                     document.getElementById('errorMessage').innerHTML = `Error uploading file: ${error.message}`;
                     document.getElementById('errorMessage').style.display = 'block';
-    
-                    // Hide error message after 5 seconds
+
                     setTimeout(() => {
                         document.getElementById('errorMessage').style.display = 'none';
                     }, 5000);
