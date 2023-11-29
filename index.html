@@ -6,56 +6,75 @@
     <title>File Upload</title>
     <style>
         body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; 
-    height: 100vh;
-    margin: 0;
-}
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; 
+            height: 100vh;
+            margin: 0;
+        }
 
-h1 {
-    margin-bottom: 20px; 
-}
+        h1 {
+            margin-bottom: 20px; 
+        }
 
-#uploadForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px; 
-}
+        #uploadForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px; 
+        }
 
-#fileInputContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px; 
-}
+        #fileInputContainer {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px; 
+        }
 
-label {
-    margin-right: 10px; 
-}
+        label {
+            margin-right: 10px; 
+        }
 
-#fileInput {
-    width: 300px;
-}
+        #fileInput {
+            width: 300px;
+        }
 
-#uploadButton {
-    font-size: 1.2em; 
-    padding: 10px; 
-    cursor: pointer;
-}
+        #uploadButton {
+            font-size: 1.2em; 
+            padding: 10px; 
+            cursor: pointer;
+        }
 
-#loader {
-    display: none;
-    margin-top: 20px;
-}
+        #loader {
+            display: none;
+            margin-top: 20px;
+        }
 
-#successMessage, #errorMessage {
-    display: none;
-    margin-top: 20px;
-}
+        .custom-loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
 
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #successMessage, #errorMessage {
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +87,7 @@ label {
         <button type="button" id="uploadButton" onclick="uploadFile()">Upload</button>
     </form>
 
-    <div id="loader">Uploading...</div>
+    <div id="loader" class="custom-loader"></div>
     <div id="successMessage"></div>
     <div id="errorMessage"></div>
 
@@ -92,17 +111,21 @@ label {
                 .then(data => {
                     document.getElementById('loader').style.display = 'none';
 
-                    document.getElementById('successMessage').innerHTML = `File uploaded successfully: ${data.filePath}`;
+                    document.getElementById('successMessage').innerHTML = `File uploaded successfully: `;
                     document.getElementById('successMessage').style.display = 'block';
 
+                    const successGif = document.createElement('img');
+                    successGif.src = 'https://media.tenor.com/Aq48a65922EAAAAi/%E3%82%AF%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC-%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%83%BC.gif';
+                    document.getElementById('successMessage').appendChild(successGif);
+    
                     fileInput.value = '';
 
                     setTimeout(() => {
                         document.getElementById('successMessage').style.display = 'none';
+                        successGif.remove();
                     }, 5000);
                 })
                 .catch(error => {
-
                     document.getElementById('loader').style.display = 'none';
 
                     document.getElementById('errorMessage').innerHTML = `Error uploading file: ${error.message}`;
